@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: active-probe
+  name: active-probe
+spec:
+  containers:
+    - name: active-probe
+      image: my-spring-application
+      livenessProbe:
+        httpGet:
+          port: 8080
+          path: /pulse
+          httpHeaders:
+            - name: X-Custom-Header
+              value: Awesome
+        initialDelaySeconds: 30
+        timeoutSeconds: 1
+      readinessProbe:
+        exec:
+          command:
+            - /usr/local/bin/checker
+            - --full-check
+            - --data-service=my-db-access-application
+        initialDelaySeconds: 60
+        timeoutSeconds: 5

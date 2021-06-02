@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-collect-proxy
+  labels:
+    tier: stats
+    app: my-collect-proxy
+spec:
+  template:
+    metadata:
+      labels:
+        app: my-collect-proxy
+    spec:
+      containers:
+        - name: my-collect-proxy
+          image: my-collect-proxy-image
+      hostPID: true
+      hostNetwork: true
+      hostIPC: true
+  selector:
+    matchLabels:
+      app: my-application
