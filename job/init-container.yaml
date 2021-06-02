@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-application
+  annotations:
+    pod.beta.kubernetes.io/init-containers: '[
+    {
+      "name": "install",
+      "image": "busybox",
+      "command": ["/support/safe_init"],
+      "volumeMounts": [
+        {
+          "name": "workDir",
+          "mountPath": "/work-dir"
+        }
+      ]
+
+    }
+    ]'
+spec:
+  ...
